@@ -1,0 +1,5 @@
+package kr.or.ddit.basic.util;
+
+public class getSqlMapClient {
+
+}

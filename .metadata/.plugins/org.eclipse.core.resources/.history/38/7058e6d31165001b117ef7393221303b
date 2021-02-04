@@ -1,0 +1,51 @@
+package kr.or.ddit.basic;
+
+import java.io.IOException;
+import java.io.Reader;
+import java.nio.charset.Charset;
+import java.util.Scanner;
+
+import com.ibatis.common.resources.Resources;
+import com.ibatis.sqlmap.client.SqlMapClient;
+import com.ibatis.sqlmap.client.SqlMapClientBuilder;
+
+// jdecTest 프로젝트에 있는 'jdbc Test06.jaba의 처리방법을
+// ibatis를 이용하여처리하는 것으로 변경하시오
+
+// 쿼리문이 저장될 xml문서 이름은 'jdbc06.xml'로 한다.
+
+
+
+public class JdbcTest06ToIbatis {
+
+	public static void main(String[] args) {
+		Scanner scan= new Scanner(System.in);
+		//SQL문을 처리할 SqlMapClient객체 변수 선언
+		SqlMapClient smc = null; 
+		Reader rd = null;
+		
+		
+		try {
+			Charset charset = Charset.forName("UTF-8");
+			Resources.setCharset(charset);
+			
+			rd = Resources.getResourceAsReader("sqlMapConfig.xml");
+			smc = SqlMapClientBuilder.buildSqlMapClient(rd);
+			
+			//-----------------------------------------------------------------------
+			
+			int lprodId = smc.queryForObject("jdbc06.getMaxId");
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+			
+		}finally {
+			if(rd!=null)try { rd.close();} catch (IOException e2) {
+				// TODO: handle exception
+			}
+		}
+		
+		
+	}
+
+}

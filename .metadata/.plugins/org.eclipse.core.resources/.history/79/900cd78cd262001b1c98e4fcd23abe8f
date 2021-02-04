@@ -1,0 +1,31 @@
+package seil;
+
+
+public class A {
+	int studentID;
+	String studentName;
+	int grade;
+	String address;
+	
+	
+	
+
+	public String getStudentName() {
+		return studentName;
+	}
+
+
+
+
+	public static void main(String[] args) {
+
+		A studentAhn = new A();
+		studentAhn.studentName = "안연수";
+		
+		System.out.println(A.studentName);
+		System.out.println(A.getStudentName);
+		
+	}
+	
+	
+}

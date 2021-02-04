@@ -1,0 +1,5 @@
+package seil.dao;
+
+public interface IDao {
+
+}

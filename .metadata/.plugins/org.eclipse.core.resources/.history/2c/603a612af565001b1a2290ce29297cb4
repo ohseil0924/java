@@ -1,0 +1,23 @@
+package kr.or.ddit.util;
+
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+
+public class CryptoyUtil {
+
+	/**
+	 * 문자열을 MD5방식으로 암호화(해시) 한다.
+	 * @param str 암호화 할 문자열
+	 * @return 암호화 된 문자열
+	 * @throws NoSuchAlgorithmException 
+	 * 
+	 */
+	
+	public static String md5(String str) throws NoSuchAlgorithmException {
+		MessageDigest md = MessageDigest.getInstance("M5D");
+		md.update(str.getBytes());
+		
+		
+	}
+
+}

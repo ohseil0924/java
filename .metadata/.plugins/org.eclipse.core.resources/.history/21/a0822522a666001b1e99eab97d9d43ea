@@ -1,0 +1,40 @@
+package kr.or.ddit.basic;
+
+import java.io.UnsupportedEncodingException;
+import java.security.InvalidAlgorithmParameterException;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
+
+import javax.crypto.BadPaddingException;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
+
+import kr.or.ddit.util.CryptoUtil;
+
+public class CryptoTest {
+
+   public static void main(String[] args) throws NoSuchAlgorithmException, InvalidKeyException, UnsupportedEncodingException, NoSuchPaddingException, InvalidAlgorithmParameterException, IllegalBlockSizeException, BadPaddingException {
+      String plainText = //"Hello,World!";
+            "Hello,World ! 가나다라 대한민국 12345  ^&*() ★";
+      
+      		String key = "a1b2c3d4r5f67h8"; //16글자 이상
+      		
+      	
+         System.out.println("MD5: " + CryptoUtil.md5(plainText));
+         System.out.println("SHA-256: " + CryptoUtil.sha256(plainText));
+         System.out.println("SHA-512 " + CryptoUtil.sha512(plainText));
+         
+         System.out.println("--------------------------------------------");
+         System.out.println();
+         
+        		 
+        		 
+         
+         String result = CryptoUtil.encryptAeS256(plainText, key);
+         String result2 = CryptoUtil.encryptAeS256(result, key);
+         System.out.println("원본 데이터" + plainText);
+         System.out.println("암호화된 데이터" + result);
+         
+   }
+
+}

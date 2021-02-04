@@ -1,0 +1,101 @@
+package seil.dao;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
+
+import seil.util.Util;
+import seil.vo.VO;
+
+public class DaoImpl implements IDao {
+
+	@Override
+	public int insertBoard(VO boardVo) {
+		Connection conn =null;
+		PreparedStatement pstmt = null;
+		int cnt = 0;
+		try {
+		conn = Util.getConnection();
+		String sql ="insert into jdbc_board(board_no, board_title, board_witer, board_datem board_content)"
+					+ "values(board_seq.nextval, ?, ?, sysdate, ?)";
+		
+		pstmt = conn.prepareStatement(sql);
+		pstmt.setString(1, boardVo.getBoard_title());
+		pstmt.setString(2, boardVo.getBoard_writer());
+		pstmt.setString(3, boardVo.getBoard_content());
+		cnt = pstmt.executeUpdate();
+		
+		} catch (SQLException e) {
+			cnt = 0;
+			e.printStackTrace();
+		}finally{
+			if(pstmt != null) try{ pstmt.close(); } catch(SQLException e){};
+			if(conn != null) try{ conn.close(); } catch(SQLException e){};
+		}
+		return cnt;
+	}
+	@Override
+	public List<VO> displayAll() {
+		Connection conn = null;
+		Statement stmt = null;
+		ResultSet rs = null;
+		List<VO> boardList = new ArrayList<>();
+	try {
+		conn = Util.getConnection();
+		String sql = "select *from jdbc_board order by board_no desc";
+		stmt = conn.createStatement();
+		rs = stmt.executeQuery(sql);
+		
+		while(rs.next()){
+			VO vo = new VO();
+			vo.setBoard_no(rs.getInt("board_no"));
+			vo.setBoard_title(rs.getString("board_title"));
+			vo.setBoard_writer(rs.getString("board_writer"));
+			vo.setBoard_date(rs.getString("board_date"));
+			vo.setBoard_cnt(rs.getInt("board_cnt"));
+			vo.setBoard_content(rs.getString("board_content"));
+			List.add(boardvo);
+		}
+	} catch (SQLException e) {
+		boardList = null;
+		e.printStackTrace();
+	} finally{
+		if(rs != null) try{ rs.close(); } catch(SQLException e){};
+		if(stmt != null) try{ stmt.close(); } catch(SQLException e){};
+		if(conn != null) try{ conn.close(); } catch(SQLException e){};
+	}
+	return boardList;
+}
+
+	@Override
+	public List<VO> search(String word) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public VO displayOne(int boardNo) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public int update(VO boardVO) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int upCnt(int boardNo) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+
+	
+	
+}

@@ -1,0 +1,63 @@
+package kr.or.ddit.mvc.dao;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.util.List;
+
+import kr.or.ddit.mvc.vo.MemberVO;
+import kr.or.ddit.util.DBUtil3;
+
+public class MemberDaolmpl implements IMemberDao {
+
+	@Override
+	public int insertMember(MemberVO memVO) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		int cnt = 0;
+		try {
+			conn = DBUtil3.getConnection();
+			String sql = "INSERT INTO MYMEMBER (MEM_ID,MEM_NAME,MEM_TEL,MEM_ADDR)"
+					+ " VALUES(?, ?, ?, ?) ";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, memVO.getMem_id());
+			pstmt.setString(2, memVO.getMem_name());
+			pstmt.setString(3, memVO.getMem_tel());
+			pstmt.setString(4, memVO.getMem_addr());
+			
+			cnt = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			// TODO: handle exception
+		}
+		
+		return 0;
+	}
+
+	@Override
+	public int deleteMember(String memId) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int updateMember(MemberVO memVO) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public List<MemberVO> getAllMember() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public int getMemberCount(String memId) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	
+	
+}

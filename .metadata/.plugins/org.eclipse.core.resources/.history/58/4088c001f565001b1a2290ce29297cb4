@@ -1,0 +1,16 @@
+package kr.or.ddit.util;
+
+public class CryptoyUtil {
+
+	/**
+	 * 문자열을 MD5방식으로 암호화(해시) 한다.
+	 * @param str 암호화 할 문자열
+	 * @return 암호화 된 문자열
+	 * 
+	 */
+	
+	public static String md5(String str) {
+		
+	}
+
+}

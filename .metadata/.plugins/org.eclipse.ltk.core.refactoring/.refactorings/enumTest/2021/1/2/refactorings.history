@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename compilation unit &apos;kr.or.ddit.basic.hotel.java&apos; to &apos;Hotel.java&apos;&#x0D;&#x0A;- Original project: &apos;enumTest&apos;&#x0D;&#x0A;- Original element: &apos;kr.or.ddit.basic.hotel.java&apos;&#x0D;&#x0A;- Renamed element: &apos;kr.or.ddit.basic.Hotel.java&apos;" description="Rename compilation unit &apos;hotel.java&apos;" flags="2" id="org.eclipse.jdt.ui.rename.compilationunit" input="/src&lt;kr.or.ddit.basic{hotel.java" name="Hotel.java" references="false" stamp="1610104591400" version="1.0"/>
+</session>

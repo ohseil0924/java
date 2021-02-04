@@ -1,0 +1,14 @@
+package kr.or.ddit.basic.util;
+
+public class getSqlMapClient {
+	priavate static SqlMapClient smc;
+	
+	static {
+		REader rd = null;
+		try {
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+	}
+}

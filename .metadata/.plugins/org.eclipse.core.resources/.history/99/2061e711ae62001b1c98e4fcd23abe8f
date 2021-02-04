@@ -1,0 +1,62 @@
+package seil.dao;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.util.List;
+
+import seil.util.Util;
+import seil.vo.VO;
+
+public class DaoImpl implements IDao {
+
+	@Override
+	public int insertBoard(VO boardVo) {
+		Connection conn =null;
+		PreparedStatement pstmt = null;
+		int cnt = 0;
+		try {
+		conn = Util.getConnection();
+		
+		} catch (SQLException e) {
+
+		
+		}
+		
+		return 0;
+	}
+
+	@Override
+	public List<VO> displayAll() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<VO> search(String word) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public VO displayOne(int boardNo) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public int update(VO boardVO) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int upCnt(int boardNo) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+
+	
+	
+}

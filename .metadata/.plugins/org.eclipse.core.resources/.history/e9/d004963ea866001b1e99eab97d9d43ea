@@ -1,0 +1,35 @@
+package seil;
+
+
+public class JackSon {
+	Jackson(String name, int age){
+		this.name = name;
+		this.age = age;
+	}
+	
+	Jackson(){
+		
+	}
+	
+	String name;
+	int age;
+	
+	public int getAge(){
+		return age;
+	}
+	
+	public String getName(){
+		return name;
+	}
+	public static void main(String[] args)throws JsonProcessingException {
+		
+		ObjectMapper objectMapper = new ObjectMapper();
+		Person person = new Person("Nicole",20);
+		
+		
+	
+	
+                
+    }
+    
+}//CLASS END

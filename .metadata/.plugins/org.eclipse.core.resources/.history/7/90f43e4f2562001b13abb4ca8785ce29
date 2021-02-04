@@ -1,0 +1,6 @@
+package seil.vo;
+
+public class VO {
+
+	private int board_no;
+}

@@ -1,0 +1,22 @@
+package kr.or.ddit.basic.util;
+
+import java.io.IOException;
+import java.io.Reader;
+
+import com.ibatis.common.resources.Resources;
+import com.ibatis.sqlmap.client.SqlMapClient;
+import com.ibatis.sqlmap.client.SqlMapClientBuilder;
+
+public class getSqlMapClient {
+	private static SqlMapClient smc;
+	
+	static {
+		Reader rd = null;
+		try {
+			rd = Resources.getResourceAsReader("sqlMapConfig.xml");
+			smc = SqlMapClientBuilder.buildSqlMapClient(rd);
+		} catch (IOException e) {
+			throw new RuntimeException("SQlMapClient 객체 생성 실패- " + e);
+		}
+	}
+}

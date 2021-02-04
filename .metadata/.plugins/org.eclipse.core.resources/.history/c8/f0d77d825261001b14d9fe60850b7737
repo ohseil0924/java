@@ -1,0 +1,59 @@
+package kr.or.ddit.mvc.service;
+
+import java.util.List;
+import java.util.Map;
+
+import kr.or.ddit.mvc.dao.IMemberDao;
+import kr.or.ddit.mvc.dao.MemberDaolmpl;
+import kr.or.ddit.mvc.vo.MemberVO;
+
+public class MemberServicelmpl implements IMemberService {
+	//Service객체는 Dao객체를 사용하기 때문에 
+	//Dao객체가 저장될 변수가 필요하다.
+	private IMemberDao memDao;
+	
+	
+	//생성자
+	public MemberServicelmpl() {
+		memDao = new MemberDaolmpl();
+	}
+	
+	
+	
+
+	@Override
+	public int insertMember(MemberVO memVO) {
+		return memDao.insertMember(memVO);
+	}
+
+	
+	@Override
+	public int deleteMember(String memId) {
+		return memDao.deleteMember(memId);
+	}
+
+	@Override
+	public int updateMember(MemberVO memVO) {
+		return memDao.updateMember(memVO);
+	}
+
+	@Override
+	public List<MemberVO> getAllMember() {
+		return memDao.getAllMember();
+	}
+
+	@Override
+	public int getMemberCount(String memId) {
+		return memDao.getMemberCount(memId);
+	}
+
+
+
+
+	@Override
+	public int updateMemberSelect(Map<String, String> info) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+}

@@ -1,0 +1,87 @@
+package kr.or.ddit.basic;
+
+import java.io.Reader;
+import java.nio.charset.Charset;
+import java.sql.SQLException;
+import java.util.Scanner;
+
+import com.ibatis.common.resources.Resources;
+import com.ibatis.sqlmap.client.SqlMapClient;
+import com.ibatis.sqlmap.client.SqlMapClientBuilder;
+
+import kr.or.ddit.util.SqlMapUtil;
+
+public class JdbcTest06ToIbatis {
+	//jdbcTest 프로젝트에 있는 'jdbcTest06.java' 의 처리 방법을 
+	// ibatis를 이용하여 처리하는것으로 변경하시오 .
+	// 쿼리문이 저장될 xml 문서 이름은 'jdbc06.xml'로 한다.
+	public static void main(String[] args) {
+		Scanner scan = new Scanner(System.in);
+		//sql 문을 처리할 sqlMapClient 객체 변수 선언
+		SqlMapClient smc = null; 
+		Reader rd = null;
+		
+		
+		try {
+//			Charset charset = Charset.forName("UTF-8");
+//			Resources.setCharset(charset);
+//			
+//			rd =
+//					Resources.getResourceAsReader("sqlMapConfig.xml");
+//			
+//			smc = SqlMapClientBuilder.buildSqlMapClient(rd);
+			smc = SqlMapUtil.getSqlMapClient();
+			
+			//----------------------------------------------------
+			//다음 순번의 lprod_id 값 구하기 
+			int lprodId = (int) smc.queryForObject("jdbc06.getMaxid");
+			
+			String lprodGu; 
+			int count=0;
+			do {
+				System.out.println("상품 분류코드 입력");
+				lprodGu = scan.next();
+				
+				count = 
+						(int) smc.queryForObject("jdbc06.getLprodCount", lprodGu);
+				if(count==1){
+					System.out.println("입력한 상품 분류코드 " + lprodGu +
+									"는이미등록된 코드입니다.");
+					System.out.println( "다시 입력하세요");
+				}
+				
+			}while(count>0);
+			
+			System.out.println("상품 분류명 입력 : ");
+			String lprodNm = scan.next();
+			
+			LprodVO lvo = new LprodVO();
+			lvo.setLprod_id(lprodId);
+			lvo.setLprod_gu(lprodGu);
+			lvo.setLprod_nm(lprodNm);
+			
+			Object obj = smc.insert("jdbc06.insertLprod",lvo);
+			
+			if(obj==null) {
+				System.out.println("추가 성공 !!!");
+			}else {
+				System.out.println("추가 실패 ~~~");
+			}
+			
+			
+			
+			
+			
+	/*	} catch (IOException e) {
+			e.printStackTrace();*/
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}/* finally {
+			if(rd!=null) try {rd.close();} catch(IOException e) {}
+		}*/
+		
+
+	}
+
+}

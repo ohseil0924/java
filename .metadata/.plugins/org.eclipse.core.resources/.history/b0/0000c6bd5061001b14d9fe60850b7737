@@ -1,0 +1,247 @@
+package kr.or.ddit.mvc.controller;
+
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Scanner;
+
+import kr.or.ddit.mvc.service.IMemberService;
+import kr.or.ddit.mvc.service.MemberServiceImp;
+import kr.or.ddit.mvc.vo.MemberVO;
+import kr.or.ddit.util.DBUtil;
+
+public class MemberController {
+	Scanner scan = new Scanner(System.in);
+	
+	// Controller는 Service객체를 사용하기 때문에
+	// Service객체가 저장될 변수가 필요하다.
+	private IMemberService service;
+	// 생성자
+	public MemberController(){
+		service = new MemberServiceImp();
+	}
+	
+	public static void main(String[] args) {
+		new MemberController().memberStart();
+	}
+	
+	public void memberStart(){
+		while(true){
+			int choice = displayMenu();
+			switch(choice){
+			case 1:		insertMember();// 추가
+				break;
+			case 2:		deleteMember();// 삭제
+				break;
+			case 3:		updateMember2();// 수정
+				break;
+			case 4:		// 전체 출력
+				displayMember();
+				break;
+			case 0:		// 작업 끝.
+				System.out.println("작업을 마칩니다.");
+				return;
+			default:
+				System.out.println("번호를 잘못 입력했습니다.");
+				System.out.println("다시 입력하세요.");
+			}
+		}
+	}
+	// 메뉴 출력 및 작업번호를 입력 받아 반환하는 메서드
+	private int displayMenu(){
+		System.out.println();
+		System.out.println(" -- 작 업 선 택 -- ");
+		System.out.println(" 1. 자 료 추 가");
+		System.out.println(" 2. 자 료 제 거");
+		System.out.println(" 3. 자 료 수 정");
+		System.out.println(" 4. 전체 자료 출력");
+		System.out.println(" 0. 작 업 끝 ...");
+		System.out.println("---------------------");
+		System.out.print("작업 선택 >> ");
+		int num = scan.nextInt();
+		return num;
+	}
+//	 회원 정보를 수정하는 메서드(원하는 컬럼 한가지만 수정한다.)
+	private void updateMember2(){
+		
+		System.out.println();
+		System.out.println("수정할 회원 정보를 입력하시오.");
+		System.out.print("회원ID >> ");
+		String memId = scan.next();
+		
+		int count = service.getMemberCount(memId);
+		if(count == 0){ //없는 회원이면 ...
+			System.out.println(memId + "은(는) 없는 회원 ID 입니다.");
+			System.out.println("수정 작업을 마칩니다.");
+			return;
+		}
+		Map<String, String> info = new HashMap<>();
+		
+		String updateField = null;
+		String updateStr = null;
+		int num = 0;
+		do{
+			System.out.println();
+			System.out.println("수정할 항목을 선택하세요.");
+			System.out.println("1. 회원이름  2. 전화번호  3. 회원주소");
+			System.out.println("----------------------------------------");
+			System.out.print("수정항목 입력 >>");
+			num = scan.nextInt();
+			
+			switch(num){
+			case 1: updateField = "mem_name";
+					updateStr = "회원이름";
+					break;
+			case 2: updateField = "mem_tel";
+					updateStr = "전화번호";
+					break;
+			case 3: updateField = "mem_addr";
+					updateStr = "회원주소";
+					break;
+			default:
+				System.out.println("수정 항목을 잘못 입력하셨습니다.");
+				System.out.println("다시 입력하세요.");
+			}
+		}while(num < 1 || num > 3);
+		
+		System.out.println();
+		System.out.print("새로운" + updateStr + " >> ");
+		scan.nextLine();
+		String updateData = scan.nextLine();
+		info.put("col", updateField);
+		info.put("val", updateData);
+		info.put("memId", memId);
+		int cnt = service.updateMemberSelect(info);
+		
+		if(cnt>0){
+			System.out.println("성공");
+		}else{
+			System.out.println("실패!");
+		}
+	}
+	
+	// 회원 정보를 수정하는 메서드
+	private void updateMember(){
+		System.out.println();
+		System.out.println("수정할 회원 정보를 입력하세요.");
+		System.out.print("회원ID >> ");
+		String memId = scan.next();
+		
+		int cnt = service.getMemberCount(memId);
+		if(cnt < 1){
+			System.out.println("수정할 아이디가 없습니다.");
+			return;
+		}
+		System.out.println("새로운 회원 이름 >> ");
+		String memName = scan.next();
+		
+		System.out.println("새로운 전화번호 >> ");
+		String memTel = scan.next();
+		
+		scan.nextLine(); // 버퍼 비우기
+		System.out.print("새로운 회원 주소 >> ");
+		String memAddr = scan.nextLine();		
+		
+		MemberVO memVo = new MemberVO();
+		memVo.setMem_id(memId);
+		memVo.setMem_name(memName);
+		memVo.setMem_tel(memTel);
+		memVo.setMem_addr(memAddr);
+		
+		cnt = service.updateMember(memVo);
+		if(cnt >0){
+			System.out.println("성공");
+		}else{
+			System.out.println("실패");
+		}
+	}
+	
+	// 회원 정보를 삭제하는 메서드
+	private void deleteMember(){
+		System.out.println();
+		System.out.println("삭제할 회원 정보를 입력하세요.");
+		System.out.print("삭제할 회원ID >> ");
+		String memId = scan.next();
+		
+		int cnt = service.deleteMember(memId);
+		
+		if(cnt>0){
+			System.out.println("성공");
+		}else{
+			System.out.println("실패!");
+		}
+		
+	}
+	
+	// 전체 회원 정보를 출력하는 메서드
+	private void displayMember(){
+		System.out.println();
+		System.out.println("-----------------------------------------");
+		System.out.println(" ID		이름 		전화번호 		주소");
+		System.out.println("-----------------------------------------");
+		
+		List<MemberVO> mem_list = new ArrayList<>();
+		mem_list = service.getAllMember();
+		if(mem_list==null || mem_list.size()==0){
+			System.out.println("등록된 회원이 하나도 없습니다.");
+		}else{
+			for(MemberVO a : mem_list ){
+				System.out.print( a.getMem_id()+"\t"+"\t");
+				System.out.print( a.getMem_name()+"\t"+"\t");
+				System.out.print(a.getMem_tel()+"\t"+"\t");
+				System.out.println(a.getMem_addr()+"\t"+"\t"+"\t");
+			}
+			System.out.println("------------------------------------------");
+		}
+		
+	}
+	
+	// 회원 정보를 추가하는 메서드
+	private void insertMember(){
+		System.out.println();
+		System.out.println("추가할 회원 정보를 입력하세요.");
+		
+		int count = 0;
+		String memId = "";  // 입력한 회원ID가 저장될 변수
+		do{
+			System.out.print("회원ID >> ");
+			memId = scan.next();
+			
+			count = service.getMemberCount(memId);
+			if(count >0 ){
+				System.out.println("회원ID가 " + memId+"인 회원은 이미 존재합니다.");
+				System.out.println("다른 ID로 다시 입력하세요.");
+				System.out.println();
+			}
+		}while(count > 0);
+		
+		System.out.print("회원이름 >> ");
+		String memName = scan.next();
+		
+		System.out.print("전화번호 >> ");
+		String memTel = scan.next();
+		
+		scan.nextLine(); // 입력 버퍼 비우기
+		System.out.print("주 소 >> ");
+		String memAddr = scan.nextLine();
+		
+		// Service로 보낼 MemberVO객체를 생성하고 
+		// 입력한 자료를 셋팅한다.
+		MemberVO memVo = new MemberVO();
+		memVo.setMem_id(memId);
+		memVo.setMem_name(memName);
+		memVo.setMem_tel(memTel);
+		memVo.setMem_addr(memAddr);
+		
+		// service의 insert하는 메서드 호출하기
+		int cnt = service.insertMember(memVo);
+		
+		if(cnt>0){
+			System.out.println("insert 성공");
+		}else{
+			System.out.println("insert 실패");
+		}
+	}
+}

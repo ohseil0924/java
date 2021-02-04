@@ -1,0 +1,18 @@
+package kr.or.ddit.basic;
+
+import java.security.NoSuchAlgorithmException;
+
+import kr.or.ddit.util.CryptoyUtil;
+
+public class CryptoTest {
+
+   public static void main(String[] args) throws NoSuchAlgorithmException {
+      String plainText = 
+            "Hello,World ! 가나다라 대한민국 12345  ^&*() ★";
+      
+         System.out.println("MD5: " + CryptoyUtil.md5(plainText));
+         System.out.println("SHA-256: " + CryptoyUtil.sha256(plainText));
+         System.out.println("SHA-512 " + CryptoyUtil.sha512(plainText));
+   }
+
+}

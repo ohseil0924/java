@@ -1,0 +1,8 @@
+package seil.dao;
+
+public class DaoImpl implements IDao {
+
+
+	
+	
+}

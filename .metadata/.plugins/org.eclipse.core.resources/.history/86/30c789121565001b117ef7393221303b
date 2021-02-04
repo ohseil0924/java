@@ -1,0 +1,31 @@
+package kr.or.ddit.basic.util;
+
+import java.io.Reader;
+import java.nio.charset.Charset;
+import java.sql.SQLException;
+
+import com.ibatis.common.resources.Resources;
+import com.ibatis.sqlmap.client.SqlMapClient;
+import com.ibatis.sqlmap.client.SqlMapClientBuilder;
+
+public class SqlMapUtil {
+	private static SqlMapClient smc;
+	
+	static {
+		Reader rd = null;
+		try {
+			Charset charset = Charset.forName("UTF-8");
+			Resources.setCharset(charset);
+			
+			rd = Resources.getResourceAsReader("sqlMapConfig.xml");
+			smc = SqlMapClientBuilder.buildSqlMapClient(rd);
+		} catch (SQLException e) {
+			throw new RuntimeException("SQlMapClient 객체 생성 실패- " + e);
+			/*
+			 * }finally { if(rd!=null)try { rd.close();} catch (IOException e2) {
+			 */
+		}
+	
+
+		}
+	}

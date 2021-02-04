@@ -1,0 +1,12 @@
+package kr.or.ddit.basic;
+
+public class CryptoTest {
+
+	public static void main(String[] args) {
+		//암호화할 데이터 
+		String plainText = "Hello, World! 가나다라 마바사 아자차가 카다ㅏㅊ ㅏ1123 ✪ ω ✪";
+		
+		System.out.println("MD5 :" + CryptoUtil.md5(plainText));
+	}
+
+}

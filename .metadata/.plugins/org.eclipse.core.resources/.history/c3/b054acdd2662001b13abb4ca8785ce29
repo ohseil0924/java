@@ -1,0 +1,24 @@
+package seil.dao;
+
+import java.util.List;
+
+public interface IDao {
+	
+	
+	
+	/**
+	 *  새글작성
+	 * @param boardVo BoardVo객체
+	 * @return 결과 성공1 실패 0
+	 */
+	public int insertBoard(VO boardVo);
+	
+	
+	public List<VO> displayAll();
+	
+	public List<VO> search(String word);
+	
+	
+	
+	
+}
